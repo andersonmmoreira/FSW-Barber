@@ -1,3 +1,5 @@
+//TODO: Pagina Completa!
+
 import PhoneItem from "@/app/_components/phone-item"
 import ServiceItem from "@/app/_components/service-item"
 import SidebarSheet from "@/app/_components/sidbar-sheet"
@@ -16,7 +18,7 @@ interface BarbershopPageProps {
 }
 
 const BarbershopPage = async ({ params }: BarbershopPageProps) => {
-  //chamar o meu banco de dados
+  // chamar o meu banco de dados
   const barbershop = await db.barbershop.findUnique({
     where: {
       id: params.id,
@@ -35,7 +37,7 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
       {/* IMAGEM */}
       <div className="relative h-[250px] w-full">
         <Image
-          alt="barbershop.name"
+          alt={barbershop.name}
           src={barbershop?.imageUrl}
           fill
           className="object-cover"
@@ -66,17 +68,17 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
         </Sheet>
       </div>
 
-      {/* TITULO */}
+      {/* TÍTULO */}
       <div className="border-b border-solid p-5">
-        <h1 className="mb-3 text-xl font-bold">{barbershop?.name}</h1>
-        <div className="mb-2 flex items-center gap-1">
+        <h1 className="mb-3 text-xl font-bold">{barbershop.name}</h1>
+        <div className="mb-2 flex items-center gap-2">
           <MapPinIcon className="text-primary" size={18} />
           <p className="text-sm">{barbershop?.address}</p>
         </div>
 
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
           <StarIcon className="fill-primary text-primary" size={18} />
-          <p className="text-sm">5,0 ( 499 Avaliações )</p>
+          <p className="text-sm">5,0 (499 avaliações)</p>
         </div>
       </div>
 
@@ -93,8 +95,8 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
           {barbershop.services.map((service) => (
             <ServiceItem
               key={service.id}
-              barbershop={barbershop}
-              service={service}
+              barbershop={JSON.parse(JSON.stringify(barbershop))}
+              service={JSON.parse(JSON.stringify(service))}
             />
           ))}
         </div>
